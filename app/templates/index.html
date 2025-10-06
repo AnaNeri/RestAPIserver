@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Text Anonymizer</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>Text Anonymizer</h1>
+  <form id="form">
+    <textarea id="input" name="text" rows="6" cols="60" placeholder="Enter your text here..."></textarea><br>
+    <button type="submit">Anonymize</button>
+  </form>
+  <pre id="result"></pre>
+  <script>
+    document.getElementById("form").onsubmit = async e => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const res = await fetch("/anonymize", {method: "POST", body: formData});
+      const data = await res.json();
+      document.getElementById("result").textContent = JSON.stringify(data, null, 2);
+    };
+  </script>
+</body>
+</html>
